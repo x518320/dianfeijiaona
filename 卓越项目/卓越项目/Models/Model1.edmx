@@ -1,0 +1,670 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DemoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="boss">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="pwd" Type="nvarchar" MaxLength="50" />
+          <Property Name="dianjia" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="chongzhi">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="int" />
+          <Property Name="bossid" Type="int" />
+          <Property Name="money" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="houmoney" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="fang">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dong" Type="nvarchar" MaxLength="50" />
+          <Property Name="danyuan" Type="int" />
+          <Property Name="louceng" Type="int" />
+          <Property Name="fangjian" Type="int" />
+          <Property Name="datetiem" Type="date" />
+          <Property Name="up" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="dianliang" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="userid" Type="int" />
+          <Property Name="bossid" Type="int" />
+        </EntityType>
+        <EntityType Name="fankui">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="int" />
+          <Property Name="bossid" Type="int" />
+          <Property Name="zhuti" Type="nvarchar" MaxLength="100" />
+          <Property Name="miaoshu" Type="nvarchar" MaxLength="600" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="type" Type="int" />
+          <Property Name="huifu" Type="nvarchar" MaxLength="600" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bossid" Type="int" />
+          <Property Name="userid" Type="int" />
+          <Property Name="fangid" Type="int" />
+          <Property Name="up" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="now" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="dianjia" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="money" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="pwd" Type="nvarchar" MaxLength="50" />
+          <Property Name="time" Type="datetime" />
+          <Property Name="money" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="findtime" Type="datetime" />
+          <Property Name="url" Type="nvarchar" MaxLength="600" />
+        </EntityType>
+        <EntityType Name="zhuce">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="pwd" Type="nvarchar" MaxLength="50" />
+          <Property Name="time" Type="datetime" />
+          <Property Name="bossid" Type="int" />
+          <Property Name="type" Type="int" />
+        </EntityType>
+        <Association Name="FK__chongzhi__bossid__40F9A68C">
+          <End Role="boss" Type="Self.boss" Multiplicity="0..1" />
+          <End Role="chongzhi" Type="Self.chongzhi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="boss">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chongzhi">
+              <PropertyRef Name="bossid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chongzhi__userid__40058253">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="chongzhi" Type="Self.chongzhi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chongzhi">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fang__bossid__3864608B">
+          <End Role="boss" Type="Self.boss" Multiplicity="0..1" />
+          <End Role="fang" Type="Self.fang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="boss">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fang">
+              <PropertyRef Name="bossid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fang__userid__37703C52">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="fang" Type="Self.fang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fang">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fankui__bossid__44CA3770">
+          <End Role="boss" Type="Self.boss" Multiplicity="0..1" />
+          <End Role="fankui" Type="Self.fankui" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="boss">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fankui">
+              <PropertyRef Name="bossid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fankui__userid__43D61337">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="fankui" Type="Self.fankui" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fankui">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__order__bossid__4F47C5E3">
+          <End Role="boss" Type="Self.boss" Multiplicity="0..1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="boss">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="bossid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__order__fangid__51300E55">
+          <End Role="fang" Type="Self.fang" Multiplicity="0..1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="fangid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__order__userid__503BEA1C">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__zhuce__bossid__3493CFA7">
+          <End Role="boss" Type="Self.boss" Multiplicity="0..1" />
+          <End Role="zhuce" Type="Self.zhuce" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="boss">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="zhuce">
+              <PropertyRef Name="bossid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DemoModelStoreContainer">
+          <EntitySet Name="boss" EntityType="Self.boss" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="chongzhi" EntityType="Self.chongzhi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fang" EntityType="Self.fang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fankui" EntityType="Self.fankui" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="order" EntityType="Self.order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="zhuce" EntityType="Self.zhuce" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__chongzhi__bossid__40F9A68C" Association="Self.FK__chongzhi__bossid__40F9A68C">
+            <End Role="boss" EntitySet="boss" />
+            <End Role="chongzhi" EntitySet="chongzhi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chongzhi__userid__40058253" Association="Self.FK__chongzhi__userid__40058253">
+            <End Role="User" EntitySet="User" />
+            <End Role="chongzhi" EntitySet="chongzhi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fang__bossid__3864608B" Association="Self.FK__fang__bossid__3864608B">
+            <End Role="boss" EntitySet="boss" />
+            <End Role="fang" EntitySet="fang" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fang__userid__37703C52" Association="Self.FK__fang__userid__37703C52">
+            <End Role="User" EntitySet="User" />
+            <End Role="fang" EntitySet="fang" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fankui__bossid__44CA3770" Association="Self.FK__fankui__bossid__44CA3770">
+            <End Role="boss" EntitySet="boss" />
+            <End Role="fankui" EntitySet="fankui" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fankui__userid__43D61337" Association="Self.FK__fankui__userid__43D61337">
+            <End Role="User" EntitySet="User" />
+            <End Role="fankui" EntitySet="fankui" />
+          </AssociationSet>
+          <AssociationSet Name="FK__order__bossid__4F47C5E3" Association="Self.FK__order__bossid__4F47C5E3">
+            <End Role="boss" EntitySet="boss" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__order__fangid__51300E55" Association="Self.FK__order__fangid__51300E55">
+            <End Role="fang" EntitySet="fang" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__order__userid__503BEA1C" Association="Self.FK__order__userid__503BEA1C">
+            <End Role="User" EntitySet="User" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__zhuce__bossid__3493CFA7" Association="Self.FK__zhuce__bossid__3493CFA7">
+            <End Role="boss" EntitySet="boss" />
+            <End Role="zhuce" EntitySet="zhuce" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DemoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DemoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="boss" EntityType="DemoModel.boss" />
+          <EntitySet Name="chongzhi" EntityType="DemoModel.chongzhi" />
+          <EntitySet Name="fang" EntityType="DemoModel.fang" />
+          <AssociationSet Name="FK__chongzhi__bossid__17036CC0" Association="DemoModel.FK__chongzhi__bossid__17036CC0">
+            <End Role="boss" EntitySet="boss" />
+            <End Role="chongzhi" EntitySet="chongzhi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fang__bossid__787EE5A0" Association="DemoModel.FK__fang__bossid__787EE5A0">
+            <End Role="boss" EntitySet="boss" />
+            <End Role="fang" EntitySet="fang" />
+          </AssociationSet>
+          <EntitySet Name="zhuce" EntityType="DemoModel.zhuce" />
+          <AssociationSet Name="FK__zhuce__bossid__29221CFB" Association="DemoModel.FK__zhuce__bossid__29221CFB">
+            <End Role="boss" EntitySet="boss" />
+            <End Role="zhuce" EntitySet="zhuce" />
+          </AssociationSet>
+          <EntitySet Name="fankui" EntityType="DemoModel.fankui" />
+          <AssociationSet Name="FK__fankui__bossid__2DE6D218" Association="DemoModel.FK__fankui__bossid__2DE6D218">
+            <End Role="boss" EntitySet="boss" />
+            <End Role="fankui" EntitySet="fankui" />
+          </AssociationSet>
+          <EntitySet Name="User" EntityType="DemoModel.User" />
+          <AssociationSet Name="FK__chongzhi__userid__40058253" Association="DemoModel.FK__chongzhi__userid__40058253">
+            <End Role="User" EntitySet="User" />
+            <End Role="chongzhi" EntitySet="chongzhi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fang__userid__37703C52" Association="DemoModel.FK__fang__userid__37703C52">
+            <End Role="User" EntitySet="User" />
+            <End Role="fang" EntitySet="fang" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fankui__userid__43D61337" Association="DemoModel.FK__fankui__userid__43D61337">
+            <End Role="User" EntitySet="User" />
+            <End Role="fankui" EntitySet="fankui" />
+          </AssociationSet>
+          <EntitySet Name="order" EntityType="DemoModel.order" />
+          <AssociationSet Name="FK__order__bossid__4F47C5E3" Association="DemoModel.FK__order__bossid__4F47C5E3">
+            <End Role="boss" EntitySet="boss" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__order__fangid__51300E55" Association="DemoModel.FK__order__fangid__51300E55">
+            <End Role="fang" EntitySet="fang" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__order__userid__503BEA1C" Association="DemoModel.FK__order__userid__503BEA1C">
+            <End Role="User" EntitySet="User" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="boss">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pwd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dianjia" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="chongzhi" Relationship="DemoModel.FK__chongzhi__bossid__17036CC0" FromRole="boss" ToRole="chongzhi" />
+          <NavigationProperty Name="fang" Relationship="DemoModel.FK__fang__bossid__787EE5A0" FromRole="boss" ToRole="fang" />
+          <NavigationProperty Name="zhuce" Relationship="DemoModel.FK__zhuce__bossid__29221CFB" FromRole="boss" ToRole="zhuce" />
+          <NavigationProperty Name="fankui" Relationship="DemoModel.FK__fankui__bossid__2DE6D218" FromRole="boss" ToRole="fankui" />
+          <NavigationProperty Name="order" Relationship="DemoModel.FK__order__bossid__4F47C5E3" FromRole="boss" ToRole="order" />
+        </EntityType>
+        <EntityType Name="chongzhi">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" />
+          <Property Name="bossid" Type="Int32" />
+          <Property Name="money" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="houmoney" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="boss" Relationship="DemoModel.FK__chongzhi__bossid__17036CC0" FromRole="chongzhi" ToRole="boss" />
+          <NavigationProperty Name="User" Relationship="DemoModel.FK__chongzhi__userid__40058253" FromRole="chongzhi" ToRole="User" />
+        </EntityType>
+        <EntityType Name="fang">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dong" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="danyuan" Type="Int32" />
+          <Property Name="louceng" Type="Int32" />
+          <Property Name="fangjian" Type="Int32" />
+          <Property Name="datetiem" Type="DateTime" Precision="0" />
+          <Property Name="up" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="dianliang" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="userid" Type="Int32" />
+          <Property Name="bossid" Type="Int32" />
+          <NavigationProperty Name="boss" Relationship="DemoModel.FK__fang__bossid__787EE5A0" FromRole="fang" ToRole="boss" />
+          <NavigationProperty Name="User" Relationship="DemoModel.FK__fang__userid__37703C52" FromRole="fang" ToRole="User" />
+          <NavigationProperty Name="order" Relationship="DemoModel.FK__order__fangid__51300E55" FromRole="fang" ToRole="order" />
+        </EntityType>
+        <Association Name="FK__chongzhi__bossid__17036CC0">
+          <End Type="DemoModel.boss" Role="boss" Multiplicity="0..1" />
+          <End Type="DemoModel.chongzhi" Role="chongzhi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="boss">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chongzhi">
+              <PropertyRef Name="bossid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fang__bossid__787EE5A0">
+          <End Type="DemoModel.boss" Role="boss" Multiplicity="0..1" />
+          <End Type="DemoModel.fang" Role="fang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="boss">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fang">
+              <PropertyRef Name="bossid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="zhuce">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pwd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="time" Type="DateTime" Precision="3" />
+          <Property Name="bossid" Type="Int32" />
+          <Property Name="type" Type="Int32" />
+          <NavigationProperty Name="boss" Relationship="DemoModel.FK__zhuce__bossid__29221CFB" FromRole="zhuce" ToRole="boss" />
+        </EntityType>
+        <Association Name="FK__zhuce__bossid__29221CFB">
+          <End Type="DemoModel.boss" Role="boss" Multiplicity="0..1" />
+          <End Type="DemoModel.zhuce" Role="zhuce" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="boss">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="zhuce">
+              <PropertyRef Name="bossid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="fankui">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" />
+          <Property Name="bossid" Type="Int32" />
+          <Property Name="zhuti" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="miaoshu" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="type" Type="Int32" />
+          <Property Name="huifu" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="boss" Relationship="DemoModel.FK__fankui__bossid__2DE6D218" FromRole="fankui" ToRole="boss" />
+          <NavigationProperty Name="User" Relationship="DemoModel.FK__fankui__userid__43D61337" FromRole="fankui" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__fankui__bossid__2DE6D218">
+          <End Type="DemoModel.boss" Role="boss" Multiplicity="0..1" />
+          <End Type="DemoModel.fankui" Role="fankui" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="boss">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fankui">
+              <PropertyRef Name="bossid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pwd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="time" Type="DateTime" Precision="3" />
+          <Property Name="money" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="findtime" Type="DateTime" Precision="3" />
+          <Property Name="url" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="chongzhi" Relationship="DemoModel.FK__chongzhi__userid__40058253" FromRole="User" ToRole="chongzhi" />
+          <NavigationProperty Name="fang" Relationship="DemoModel.FK__fang__userid__37703C52" FromRole="User" ToRole="fang" />
+          <NavigationProperty Name="fankui" Relationship="DemoModel.FK__fankui__userid__43D61337" FromRole="User" ToRole="fankui" />
+          <NavigationProperty Name="order" Relationship="DemoModel.FK__order__userid__503BEA1C" FromRole="User" ToRole="order" />
+        </EntityType>
+        <Association Name="FK__chongzhi__userid__40058253">
+          <End Type="DemoModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DemoModel.chongzhi" Role="chongzhi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chongzhi">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fang__userid__37703C52">
+          <End Type="DemoModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DemoModel.fang" Role="fang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fang">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fankui__userid__43D61337">
+          <End Type="DemoModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DemoModel.fankui" Role="fankui" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fankui">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bossid" Type="Int32" />
+          <Property Name="userid" Type="Int32" />
+          <Property Name="fangid" Type="Int32" />
+          <Property Name="up" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="now" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="dianjia" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="money" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="boss" Relationship="DemoModel.FK__order__bossid__4F47C5E3" FromRole="order" ToRole="boss" />
+          <NavigationProperty Name="fang" Relationship="DemoModel.FK__order__fangid__51300E55" FromRole="order" ToRole="fang" />
+          <NavigationProperty Name="User" Relationship="DemoModel.FK__order__userid__503BEA1C" FromRole="order" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__order__bossid__4F47C5E3">
+          <End Type="DemoModel.boss" Role="boss" Multiplicity="0..1" />
+          <End Type="DemoModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="boss">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="bossid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__order__fangid__51300E55">
+          <End Type="DemoModel.fang" Role="fang" Multiplicity="0..1" />
+          <End Type="DemoModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="fangid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__order__userid__503BEA1C">
+          <End Type="DemoModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DemoModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DemoModelStoreContainer" CdmEntityContainer="DemoEntities">
+          <EntitySetMapping Name="boss">
+            <EntityTypeMapping TypeName="DemoModel.boss">
+              <MappingFragment StoreEntitySet="boss">
+                <ScalarProperty Name="dianjia" ColumnName="dianjia" />
+                <ScalarProperty Name="pwd" ColumnName="pwd" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chongzhi">
+            <EntityTypeMapping TypeName="DemoModel.chongzhi">
+              <MappingFragment StoreEntitySet="chongzhi">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="houmoney" ColumnName="houmoney" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="bossid" ColumnName="bossid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fang">
+            <EntityTypeMapping TypeName="DemoModel.fang">
+              <MappingFragment StoreEntitySet="fang">
+                <ScalarProperty Name="bossid" ColumnName="bossid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="dianliang" ColumnName="dianliang" />
+                <ScalarProperty Name="up" ColumnName="up" />
+                <ScalarProperty Name="datetiem" ColumnName="datetiem" />
+                <ScalarProperty Name="fangjian" ColumnName="fangjian" />
+                <ScalarProperty Name="louceng" ColumnName="louceng" />
+                <ScalarProperty Name="danyuan" ColumnName="danyuan" />
+                <ScalarProperty Name="dong" ColumnName="dong" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="zhuce">
+            <EntityTypeMapping TypeName="DemoModel.zhuce">
+              <MappingFragment StoreEntitySet="zhuce">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="bossid" ColumnName="bossid" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="pwd" ColumnName="pwd" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fankui">
+            <EntityTypeMapping TypeName="DemoModel.fankui">
+              <MappingFragment StoreEntitySet="fankui">
+                <ScalarProperty Name="huifu" ColumnName="huifu" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="miaoshu" ColumnName="miaoshu" />
+                <ScalarProperty Name="zhuti" ColumnName="zhuti" />
+                <ScalarProperty Name="bossid" ColumnName="bossid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="DemoModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="findtime" ColumnName="findtime" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="pwd" ColumnName="pwd" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order">
+            <EntityTypeMapping TypeName="DemoModel.order">
+              <MappingFragment StoreEntitySet="order">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="dianjia" ColumnName="dianjia" />
+                <ScalarProperty Name="now" ColumnName="now" />
+                <ScalarProperty Name="up" ColumnName="up" />
+                <ScalarProperty Name="fangid" ColumnName="fangid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="bossid" ColumnName="bossid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

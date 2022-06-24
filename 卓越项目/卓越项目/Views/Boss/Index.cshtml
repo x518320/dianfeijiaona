@@ -1,0 +1,303 @@
+﻿@{
+    ViewBag.Title = "主页";
+    Layout = "~/Views/Shared/boss.cshtml";
+}
+<link href="~/Content/animate.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/图/echarts.min.js"></script>
+<div class="container-fluid">
+    <div class="container-fluid cm-container-white" style="background-color: white; margin: auto auto auto -1.2%; width: 102.5%;">
+        <h1 class="animate__animated  animate__fadeInDown"  style="font-weight:900;color:#0f8ab4">用电情况</h1>
+        <div style="display:flex;">
+            <ul style="flex: 1; list-style: none;">
+                <li>
+                    <div id="main" style="width: auto;height:400px;"></div>
+                </li>
+                <li style="text-align:center">
+                    <a href="~/Boss/order">上月用电排行</a>
+                </li>
+            </ul>
+
+            <ul style="flex: 1; list-style: none;">
+                <li>
+                    <div id="main2" style="width: auto;height:400px;"></div>
+                </li>
+                <li style="text-align:center">
+                    <a href="~/Boss/order">月平均用电</a>
+                </li>
+            </ul>
+
+        </div>
+
+
+
+        <h1 class="animate__animated  animate__fadeInDown"  style="font-weight:900;color:#0f8ab4">充值情况</h1>
+        <div style="display:flex;">
+            <ul style="flex: 1; list-style: none;">
+                <li>
+                    <div id="main5" style="width: auto;height:400px;"></div>
+                </li>
+                <li style="text-align:center">
+                    <a href="~/Boss/chongzhi">近一月充值排行</a>
+                </li>
+            </ul>
+
+            <ul style="flex: 1; list-style: none;">
+                <li>
+                    <div id="main6" style="width: auto;height:400px;"></div>
+                </li>
+                <li style="text-align:center">
+                    <a href="~/Boss/fangjian">余额统计</a>
+                </li>
+            </ul>
+
+        </div>
+        @*表一*@
+        <script type="text/javascript">
+            var myChart = echarts.init(document.getElementById('main'));
+            var aa = new Array();
+            var bb = new Array();
+
+            $.ajax({
+                url: "/Boss/tubiao",
+                type: "get",
+                async: false,
+                success: function (data) {
+                    data.forEach((item2) => {
+                        var dd = parseInt(item2.dian)
+                        aa.push(dd)
+                        var cc = item2.name;
+                        bb.push(cc)
+                    })
+                },
+                error: function () {
+                    alert("出错啦...")
+                }
+            })
+            var option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: bb,
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: [
+                    {
+                        name: '用电量(kW·h)',
+                        type: 'bar',
+                        barWidth: '60%',
+                        data: aa
+                    }
+                ]
+            };
+            myChart.setOption(option);
+
+        </script>
+        @*表二*@
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main2'));
+            var aa = new Array();
+            var bb = new Array();
+
+            $.ajax({
+                url: "/Boss/tubiao2",
+                type: "get",
+                async: false,
+                success: function (data) {
+                    data.forEach((item2) => {
+                        var dd = parseInt(item2.dian)
+                        aa.push(dd)
+                        var date = new Date(parseInt(item2.date.replace("/Date(", "").replace(")/", ""), 10));
+                        var cc = date.getMonth()
+                        if (cc == 0) {
+                            cc = 12
+                        }
+                        bb.push(cc + "月");
+                    })
+                },
+                error: function () {
+                    alert("出错啦...")
+                }
+            })
+
+            var option = {
+                xAxis: {
+                    type: 'category',
+                    data: bb
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        data: aa,
+                        type: 'line'
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        </script>
+
+
+        @*表五*@
+        <script type="text/javascript">
+            var myChart = echarts.init(document.getElementById('main5'));
+            var aa = new Array();
+
+            $.ajax({
+                url: "/Boss/tubiao5",
+                type: "get",
+                async: false,
+                success: function (data) {
+                    data.forEach((item2) => {
+                        var dd = { value: item2.dian, name: item2.name };
+                        aa.push(dd)
+                    })
+                },
+                error: function () {
+                    alert("出错啦...")
+                }
+            })
+
+            // 指定图表的配置项和数据
+            var option = {
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    top: '5%',
+                    left: 'center'
+                },
+                series: [
+                    {
+                        name: '充值排行',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        avoidLabelOverlap: false,
+                        itemStyle: {
+                            borderRadius: 10,
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        },
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '40',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: [
+                            aa[0],
+                            aa[1],
+                            aa[2],
+                            aa[3],
+                            aa[4],
+
+                        ]
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        </script>
+        @*表六*@
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main6'));
+            var aa = new Array();
+
+            $.ajax({
+                url: "/Boss/tubiao6",
+                type: "get",
+                async: false,
+                success: function (data) {
+                    data.forEach((item2) => {
+                        var dd = item2
+                        aa.push(dd)
+                    })
+                },
+                error: function () {
+                    alert("出错啦...")
+                }
+            })
+
+            // 指定图表的配置项和数据
+            var option = {
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    top: '5%',
+                    left: 'center'
+                },
+                series: [
+                    {
+                        name: '账户余额人数统计',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        avoidLabelOverlap: false,
+                        itemStyle: {
+                            borderRadius: 10,
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        },
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '40',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: [
+                            { value: aa[0], name: '5千以上' },
+                            { value: aa[1], name: '1千-5千' },
+                            { value: aa[2], name: '5百-1千' },
+                            { value: aa[3], name: '2百-5百' },
+                            { value: aa[4], name: '2百以下' },
+
+                        ]
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        </script>
+
+    </div>
+</div>
