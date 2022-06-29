@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "房间详情";
+    Layout = "~/Views/Shared/boss.cshtml";
+}
+@model 卓越项目.Models.fang
+
+<div class="container-fluid">
+    <div class="container-fluid cm-container-white" style="background-color: white; margin: auto auto auto -1.2%; width: 102.5%;">
+
+        <h1 id="fid" style="font-weight:900;text-align:center;color:#0f8ab4;float:left">房间编号:@Model.id</h1>
+        <h1 style="font-weight:900;text-align:center;color:#0f8ab4"> @Model.dong @Model.danyuan 单元 @Model.louceng 楼 @Model.fangjian 号</h1>
+
+        <hr />
+        <h2 style="font-weight: 900;
+        color: #0f8ab4;
+       padding-left:15%">
+            用户信息
+        </h2>
+        <div style="display:flex;">
+            <div style="flex: 1;text-align:right">
+                <img style="border-radius:50%;margin-right:30px;height:250px;width:250px" src="@Model.User.url" />
+            </div>
+            <div style="flex:1;font-size:24px;font-weight:600;line-height:60px">
+                姓名:@Model.User.name<br />
+                电话:@Model.User.phone<br />
+                账户余额:@Model.User.money 元<br />
+                上次登录时间:@Model.User.time<br />
+            </div>
+        </div>
+
+        <hr />
+        <h2 style="font-weight: 900;
+        color: #0f8ab4;
+       padding-left:15%">
+            缴费详情
+        </h2>
+        <div style="display: flex; justify-content: center">
+            <div id="main" style="width: 600px;height:400px;"></div>
+        </div>
+
+
+
+
+        <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+        <script src="~/Scripts/图/echarts.min.js"></script>
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main'));
+
+            var fid = $("#fid").html().substring(5);
+
+            var aa = new Array();
+
+            $.ajax({
+                url: "/Boss/tubiao7",
+                type: "get",
+                async: false,
+                data: { "fid": fid },
+                success: function (data) {
+                    data.forEach((item2) => {
+
+                        var date = new Date(parseInt(item2.date.replace("/Date(", "").replace(")/", ""), 10));
+                        var cc = date.getMonth()
+                        if (cc == 0) {
+                            cc = 12
+                        }
+
+                        var dd = { value: item2.dian, name: cc + '月' }
+                        aa.push(dd)
+                    })
+                },
+                error: function () {
+                    alert("出错啦...")
+                }
+            })
+
+            var option = {
+                title: {
+                    text: '缴费饼图',
+                    subtext: '最近5月',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                },
+                series: [
+                    {
+                        name: '缴费金额',
+                        type: 'pie',
+                        radius: '50%',
+                        data: [
+                            aa[0],
+                            aa[1],
+                            aa[2],
+                            aa[3],
+                            aa[4]
+                        ],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        </script>
+    </div>
+</div>

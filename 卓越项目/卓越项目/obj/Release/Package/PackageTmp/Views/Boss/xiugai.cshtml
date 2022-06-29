@@ -1,0 +1,148 @@
+﻿@{
+    ViewBag.Title = "xiugai";
+    Layout = "~/Views/Shared/boss.cshtml";
+}
+@model 卓越项目.Models.boss
+<style>
+    .p1 {
+        text-align: center;
+        font-size: 24px;
+        margin: 20px;
+    }
+
+    .tishi, .tishi2 {
+        display: none;
+        position: absolute;
+        width: 400px;
+        color: white;
+        text-align: center;
+        padding: 0px 10px;
+        line-height: 50px;
+        height: 50px;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        margin: auto;
+        font-size: 25px;
+        z-index: 10;
+        border-radius: 50px;
+        background-color: #fc5c65;
+        box-shadow: 0 5px 15px rgba(20, 20, 20, 0.8);
+        backdrop-filter: blur(50px);
+    }
+</style>
+
+@*错误提示*@
+<div class="tishi">
+    <img style="width:50px;height:50px" src="~/Images/苦脸.svg" />
+    <span id="text_ti">账号或密码错误,请检查!</span>
+</div>
+@*成功提示*@
+<div class="tishi2" style="background-color:aquamarine">
+    <img style="width:50px;height:50px" src="~/Images/笑脸.svg" />
+    <span id="text_ti2">登录成功!</span>
+</div>
+<div class="container-fluid">
+    <div class="container-fluid cm-container-white" style="background-color: white; margin: auto auto auto -1.2%; width: 102.5%;">
+
+        <h1 id="fid" style="font-weight:900;text-align:center;color:#0f8ab4;">修改信息</h1>
+        <p class="p1" style="margin-top:50px">用户名:<input id="name" type="text" value="@Model.name" /></p>
+        <p class="p1">电&nbsp;&nbsp;&nbsp;&nbsp;话:<input id="phone" type="text" value="@Model.phone" /></p>
+        <p class="p1">电&nbsp;&nbsp;&nbsp;&nbsp;价:<input id="dj" min="0.01" type="number" value="@Model.dianjia" /></p>
+        <p class="p1" style="margin-top:40px"> <button id="ok" class="btn btn-info" style="padding:15px 30px;font-size:24px">确定</button></p>
+    </div>
+</div>
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    
+    //错误提示
+    function x() {
+        $('.tishi').fadeIn(700, function () {
+            setTimeout(function () {
+                $('.tishi').fadeOut(700);
+            }, 700)
+        });
+    }
+    function x2() {
+        $('.tishi2').fadeIn(700, function () {
+            setTimeout(function () {
+                $('.tishi2').fadeOut(700);
+            }, 700)
+        });
+    }
+
+    //验证手机号
+    function isPhoneNo(phone) {
+        var pattern = /^1[3456789]\d{9}$/;
+        return pattern.test(phone);
+    }
+
+    //电价
+    $("#dj").bind("input propertychange", function () {
+        var dj = $("#dj").val();
+        var arr = dj.split('.');
+        if (arr[1] > 99) {
+            var xiabiao = dj.indexOf('.');
+            $("#dj").val( dj.substring(0, xiabiao + 3))
+        }
+
+        //如果有负数符号
+        if (dj.indexOf('-') != -1) {
+            $("#dj").val(dj.replace('-',''))
+        }
+    });
+
+    $("#ok").click(function () {
+        var name = $("#name").val().trim();
+        var phone = $("#phone").val().trim();
+        var dj = $("#dj").val().trim();
+
+        //非空判断
+        if (name == "" || phone == "" || dj == "") {
+            $("#text_ti").html("请将数据填充完整!")
+            x()
+        } else {
+            if (name.length > 15) {//名字长度
+                $("#text_ti").html("名字长度超出!")
+                x()
+            } else {
+                //非法判断
+                if (name.indexOf('<') != -1 || name.indexOf('&') != -1) {
+                    $("#text_ti").html("包含非法字符< & @@!")
+                    x()
+                } else {
+                    if (!isPhoneNo(phone)) {//手机号码
+                        $("#text_ti").html("手机号码有误")
+                        x()
+                    } else {
+                        if (dj.length > 6) {//电价
+                            $("#text_ti").html("电价过高!")
+                            x()
+                        } else {//成功
+                            $.ajax({
+                                url: "/Boss/xiugaiok",
+                                type: "get",
+                                async: false,
+                                data: { "name": name, "phone": phone, "dj": dj },
+                                success: function (data) {
+                                    if (data == "1") {
+                                        $("#text_ti2").html("修改成功!")
+                                        x2()
+                                    } else {
+                                        $("#text_ti").html("手机号已被使用!")
+                                        x()
+                                    }
+                                },
+                                error: function () {
+                                    alert("出错啦...")
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+        }
+
+    })
+ </script>
