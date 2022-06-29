@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "缴费详情";
+    Layout = "~/Views/Shared/home.cshtml";
+}
+@model IEnumerable<卓越项目.Models.order>
+
+<style>
+    th {
+        text-align: center;
+    }
+</style>
+<div class="container-fluid">
+    <div class="container-fluid cm-container-white" style="background-color: white; margin: auto auto auto -1.2%; width: 102.5%;">
+        <h1 style="font-weight:900;text-align:center;color:#0f8ab4">缴费详情</h1>
+        <table class="table text-center">
+            <tr class="text-center">
+                <th>
+                    编号
+                </th>
+                <th>
+                    用户名
+                </th>
+                <th>
+                    房间
+                </th>
+                <th>
+                    上次止表
+                </th>
+                <th>
+                    本次止表
+                </th>
+                <th>
+                    本月用电
+                </th>
+                <th>
+                    电价
+                </th>
+                <th>
+                    金额
+                </th>
+                <th>
+                    缴费时间
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @item.id
+                    </td>
+                    <td>
+                        @item.User.name
+                    </td>
+                    <td>
+                        @item.fang.dong @item.fang.danyuan 单元 @item.fang.louceng 楼 @item.fang.fangjian
+                    </td>
+                    <td>
+                        @item.up
+                    </td>
+                    <td>
+                        @item.now
+                    </td>
+                    <td>
+                        @(item.now-item.up)
+                    </td>
+                    <td>
+                        @item.dianjia
+                    </td>
+                    <td>
+                        @item.money
+                    </td>
+                    <td>
+                        @item.date
+                    </td>
+                </tr>
+            }
+        </table>
+        <div style="text-align: center">
+            <ul class="pagination" >
+                <li><a href="javascript:Page(1)">首页</a></li>
+
+                @if (ViewBag.JfPage == 1)
+                {
+                    <li class="disabled"><a href="javascript:0)">上一页</a></li>
+                }
+                else
+                {
+                    <li><a href="javascript:Page(@ViewBag.JfPage-1)">上一页</a></li>
+                }
+
+
+                @if (ViewBag.JfPage >= ViewBag.JfCount )
+                {
+                    <li class="disabled"><a href="javascript:0)">下一页</a></li>
+                }
+                else
+                {
+                    <li><a href="javascript:Page(@ViewBag.JfPage+1)">下一页</a></li>
+                }
+
+                <li><a href="javascript:Page(@ViewBag.JfCount)">末页</a></li>
+            </ul>
+        </div>
+       
+    </div>
+</div>
+<script type="text/javascript">
+    function Page(Page) {
+        window.location.href = "/User/order?Page=" + Page;
+    }
+</script>

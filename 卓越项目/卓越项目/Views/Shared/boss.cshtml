@@ -1,0 +1,166 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/demo/assets/css/bootstrap-clearmin.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/demo/assets/css/roboto.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/demo/assets/css/material-design.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/demo/assets/css/small-n-flat.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/demo/assets/css/font-awesome.min.css">
+  
+    <title>@ViewBag.Title</title>
+  
+</head>
+    <body class="cm-no-transition cm-1-navbar">
+        <div id="cm-menu">
+            <nav class="cm-navbar cm-navbar-primary">
+                <div class="cm-flex">
+                
+                <a href="~/Boss/Index" style="text-decoration:none">
+                   <img src="~/Images/loge3.png"  style="height:40px;width:40px;margin:5px" />
+                  <span style="color:white;font-weight:900;font-size:26px;">电费缴纳</span>
+                    </a>
+                </div>
+                <div class="btn btn-primary md-menu-white" data-toggle="cm-menu"></div>
+            </nav>
+            <div id="cm-menu-content">
+                <div id="cm-menu-items-wrapper">
+                    <div id="cm-menu-scroller">
+                        <ul class="cm-menu-items">
+                            <li><a href="~/Boss/Index" class="sf-house">主页</a></li>
+                            <li><a href="~/Boss/order" class="sf-dashboard">缴费详情</a></li>
+                            <li><a href="~/Boss/chongzhi" class="sf-lightning">充值记录</a></li>
+                            <li><a href="~/Boss/fangjian" class="sf-building">房间管理</a></li>
+                            <li><a href="~/Boss/yanzheng" class="sf-sign-add">用户验证</a></li>
+                            @*<li class="cm-submenu">
+            <a class="sf-window-layout">Navbar layouts <span class="caret"></span></a>
+            <ul>
+                <li><a href="layouts-breadcrumb1.html">1st nav breadcrumb</a></li>
+                <li><a href="layouts-breadcrumb2.html">2nd nav breadcrumb</a></li>
+                <li><a href="layouts-tabs.html">2nd nav tabs</a></li>
+            </ul>
+        </li>
+        <li class="cm-submenu">
+            <a class="sf-cat">Icons <span class="caret"></span></a>
+            <ul>
+                <li><a href="ico-sf.html">Small-n-flat</a></li>
+                <li><a href="ico-md.html">Material Design</a></li>
+                <li><a href="ico-fa.html">Font Awesome</a></li>
+            </ul>
+        </li>*@
+                            <li><a href="~/Boss/jianyi?lishi=0" class="sf-notepad">用户建议</a></li>
+                            <li><a href="~/Boss/edit" class="sf-lock-open">修改密码</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <header id="cm-header">
+            <nav class="cm-navbar cm-navbar-primary">
+                <div class="btn btn-primary md-menu-white hidden-md hidden-lg" data-toggle="cm-menu"></div>
+                <div class="cm-flex">
+                    @*<h1>@Session["page"]</h1>*@ 
+                    @*<form id="cm-search" action="index.html" method="get">
+                        <input type="search" name="q" autocomplete="off" placeholder="请输入关键词...">
+                    </form>*@
+                </div>
+                @*<div class="pull-right">
+                    <div id="cm-search-btn" class="btn btn-primary md-search-white" data-toggle="cm-search"></div>
+                </div>*@
+                <div class="dropdown pull-right">
+                    <button class="btn btn-primary md-notifications-white" data-toggle="dropdown"> <span id="zong" class="label label-danger"></span> </button>
+                    <div class="popover cm-popover bottom">
+                        <div class="arrow"></div>
+                        <div class="popover-content">
+                            <div class="list-group">
+                                <p id="zanwu" style="text-align:center;font-size:20px;font-weight:800;">暂无消息</p>
+                                <a id="zhuce" href="~/Boss/yanzheng" class="list-group-item">
+                                    <h4 class="list-group-item-heading text-overflow">
+                                        <i class="fa fa-fw fa-envelope"></i><span id="b_t1">有新用户注册啦</span>
+                                    </h4>
+                                    <p class="list-group-item-text" style="color:#1863d4">点击查看</p>
+                                </a>
+                                <a id="jianyi" href="~/Boss/jianyi?lishi=0" class="list-group-item">
+                                    <h4 class="list-group-item-heading">
+                                        <i class="fa fa-fw fa-envelope"></i><span id="b_t2">有新的用户建议</span>
+                                    </h4>
+                                    <p class="list-group-item-text" style="color:#1863d4">点击查看</p>
+                                </a>
+                             
+                            </div>
+                            @*<div style="padding:10px"><a class="btn btn-success btn-block" href="#">Show me more...</a></div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown pull-right">
+                    <button class="btn btn-primary md-account-circle-white" data-toggle="dropdown"></button>
+                    <ul class="dropdown-menu">
+                        <li class="disabled text-center">
+                            <a style="cursor:default;"><strong>@Session["name"]</strong></a>
+                        </li>
+                        <li class="divider"></li>
+                       
+                        <li>
+                            <a href="~/Boss/xiugai"><i class="fa fa-fw fa-cog"></i> 修改信息</a>
+                        </li>
+                        <li>
+                            <a href="~/Login/Index"><i class="fa fa-fw fa-sign-out"></i> 退出登录</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div id="global">
+           @RenderBody()
+        </div>
+        <script src="~/Content/demo/assets/js/lib/jquery.min.js"></script>
+        <script src="~/Content/demo/assets/js/jquery.mousewheel.min.js"></script>
+        <script src="~/Content/demo/assets/js/jquery.cookie.min.js"></script>
+        <script src="~/Content/demo/assets/js/fastclick.min.js"></script>
+        <script src="~/Content/demo/assets/js/bootstrap.min.js"></script>
+        <script src="~/Content/demo/assets/js/clearmin.min.js"></script>
+        <script src="~/Content/demo/assets/js/demo/home.js"></script>
+        <script>   
+            $(function () {
+            
+                $.ajax({
+                url: "/Boss/xiaoxi",
+                type: "get",
+                async: false,
+                    success: function (data) {
+                        var a = data;
+                        var arr = a.split(',');
+                        $("#zong").html(arr[0])
+                        if (arr[1] == "0") {
+                            $("#zhuce").hide()
+                        } else {
+                            $("#zhuce").show()
+                            $("#b_t1").html("有新用户注册啦 [" + arr[1] + "]");
+                        }
+
+                        if (arr[2] == "0") {
+                            $("#jianyi").hide()
+                        } else {
+                            $("#jianyi").show()
+                            $("#b_t2").html("有新的用户建议 [" + arr[2] + "]");
+                        }
+                        if (arr[1] == "0" && arr[2] == "0") {
+                            $("#zanwu").show()
+                            $("#zong").hide()
+                           
+                        } else {
+                            $("#zanwu").hide()
+                            $("#zong").show()
+                        }
+
+                },
+                error: function () {
+                    alert("出错啦...")
+                }
+                })
+            })
+        </script>
+    </body>
+</html>

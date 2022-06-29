@@ -1,0 +1,292 @@
+﻿@{
+    ViewBag.Title = "用户建议";
+    Layout = "~/Views/Shared/home.cshtml";
+}
+@model IEnumerable<卓越项目.Models.fankui>
+<style>
+    .tishi, .tishi2 {
+        display: none;
+        position: absolute;
+        width: 400px;
+        color: white;
+        font-size: 24px;
+        font-weight: 900;
+        text-align: center;
+        padding: 0px 10px;
+        line-height: 50px;
+        height: 50px;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        margin: auto;
+        z-index: 10;
+        border-radius: 50px;
+        background-color: #fc5c65;
+        box-shadow: 0 5px 15px rgba(20, 20, 20, 0.8);
+        backdrop-filter: blur(50px);
+    }
+    .ti {
+        font-size: 24px;
+        font-weight: 800;
+        margin-left: 10%;
+        margin-top: 0px;
+    }
+
+    .nei {
+        font-size: 24px;
+        font-weight: 500;
+        margin-left: 3%
+    }
+
+    span {
+        flex: 1
+    }
+
+    th {
+        text-align: center;
+    }
+</style>
+
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+@*错误提示*@
+<div class="tishi">
+    <img style="width:50px;height:50px" src="~/Images/苦脸.svg" />
+    <span id="text_ti">账号或密码错误,请检查!</span>
+</div>
+@*成功提示*@
+<div class="tishi2" style="background-color:aquamarine">
+    <img style="width:50px;height:50px" src="~/Images/笑脸.svg" />
+    <span id="text_ti2">登录成功!</span>
+</div>
+<div class="container-fluid">
+    <div class="container-fluid cm-container-white" style="background-color: white; margin: auto auto auto -1.2%; width: 102.5%;">
+        <h1 style="font-weight:900;text-align:center;color:#0f8ab4">用户建议</h1>
+        <div style="width:100%;display:flex;justify-content:center">
+            <div style="width:60%;margin-left:10%">
+                <h4 style="font-weight:900;color:#0f8ab4;">主题:<input id="zhu" type="text" style="width:50%" /></h4>
+                <h4 style="font-weight:900;color:#0f8ab4;margin-top:3%;display:flex">
+                    描述: <textarea id="miaoshu" name="saysths" rows="5" style="width:80%;color:#000;font-size:24px;letter-spacing:2px" wrap="soft"></textarea>
+                </h4>
+                <h6 id="ts" style="text-align:right;margin-right:15%">还可以输入300字</h6>
+                <p class="text-center"> <input id="tijiao" style="margin-left:-10%;padding:10px 30px" type="button" class="btn btn-info" value="提交" /></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="container-fluid cm-container-white" style="background-color: white; margin: auto auto auto -1.2%; width: 102.5%;">
+        <table class="table text-center">
+            <tr>
+                <th>
+                    编号
+                </th>
+                <th>
+                    管理员
+                </th>
+                <th>
+                    主题
+                </th>
+                <th>
+                    描述
+                </th>
+                <th>
+                    时间
+                </th>
+                <th>
+                    是否受理
+                </th>
+                <th>
+                    操作
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.id
+                    </td>
+                    <td>
+                        @item.boss.phone
+                    </td>
+                    <td>
+                        @(item.zhuti.Length>=8?item.zhuti.Substring(0,8)+"...":item.zhuti)
+                    </td>
+                    <td>
+                        @(item.miaoshu.Length>=32?item.miaoshu.Substring(0,32)+"...":item.miaoshu)
+                    </td>
+                    <td>
+                        @item.date
+                    </td>
+                    <td>
+                        <span style="font-weight:600;color:@(item.type==0?"red":"green")"> @(item.type==0?"未受理":"已受理")</span>
+                    </td>
+                    <td>
+                        <a class="btn btn-info ok">详情</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        @if (Model.Count() == 0)
+        {
+            <p style="text-align:center;font-weight:900;letter-spacing:5px;font-size:24px">你还未写建议</p>
+        }
+
+
+        <div id="xiang" style=" position: fixed;
+        background-color: #80808055;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        display:none;
+        z-index: 10;">
+            <div style="width:60%;
+        height: 600px;
+        background-color: lightblue;
+        margin-left: 25%;
+        margin-top: 80px;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(20, 20, 20, 0.8);
+        backdrop-filter: blur(50px);
+            ">
+                <img id="back" style="float:right;width:50px;height:50px;" src="~/Content/demo/assets/img/sf/sign-error.svg" />
+                <h1 id="h1" style="text-align:center;font-weight:900;color:deepskyblue;margin:20px"></h1>
+                <p>
+                    <span class="ti">用户名:</span>
+                    <span id="name" class="nei"></span>
+                    <span class="ti" style="margin-left:25%">提交时间:</span>
+                    <span id="time" class="nei"></span>
+                </p>
+                <p>
+                    <span class="ti">主&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题:</span>
+                    <textarea id="zhuti" disabled class="nei" rows="1" cols="40" style="border-radius:20px;border:0px;padding:8px">默认内容</textarea>
+                </p>
+                <p>
+                    <span class="ti">详细内容:</span>
+                    <textarea id="xiangxi" disabled class="nei" rows="3" cols="40" style="border-radius:20px;border:0px;padding:8px">默认内容</textarea>
+                </p>
+                <p>
+                    <span class="ti">回&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;复:</span>
+                    <textarea id="huifu" disabled class="nei" rows="4" cols="40" style="border-radius:20px;border:0px;padding:8px">默认内容</textarea>
+
+                </p>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    //错误提示
+    function x() {
+        $('.tishi').fadeIn(700, function () {
+            setTimeout(function () {
+                $('.tishi').fadeOut(700);
+            }, 700)
+        });
+    }
+    function x2() {
+        $('.tishi2').fadeIn(700, function () {
+            setTimeout(function () {
+                $('.tishi2').fadeOut(700);
+            }, 700)
+        });
+    }
+
+    //字数
+    $("#miaoshu").bind("input propertychange", function () {
+        if ($("#miaoshu").val().length > 300) {
+            var str = $("#miaoshu").val().substring(0, 300)
+            $("#miaoshu").val(str)
+        }
+        $("#ts").html("还可以输入" + (300 - $("#miaoshu").val().length) + "字");
+    });
+
+    //提交
+    $("#tijiao").click(function () {
+        if ($("#zhu").val().trim().length == 0 || $("#miaoshu").val().trim().length == 0) {
+            $("#text_ti").html("请将信息填充完整!")
+            x()
+        } else {
+            if ($("#zhu").val().length > 100) {
+                $("#text_ti").html("主题字数超出长度!")
+                x()
+            } else {
+                if ($("#zhu").val().indexOf('<') != -1 || $("#miaoshu").val().indexOf('<') != -1 || $("#zhu").val().indexOf('&') != -1 || $("#miaoshu").val().indexOf('&') != -1) {
+                    $("#text_ti").html("包含非法字符< & @@!")
+                    x()
+                } else {
+                    jQuery.ajax({
+                        url: "/User/jy",
+                        type: "POST",
+                        async: false,
+                        data: { "str1": $("#zhu").val(), "str2": $("#miaoshu").val() },
+                        success: function (date) {
+                            if (date == "1") {
+                                $("#text_ti2").html("提交成功!")
+                                x2()
+                                location.href = "/User/jianyi"
+                            } else {
+                                $("#text_ti").html("一天只能提交3次!")
+                                x()
+                            }
+                        },
+                        error: function (xhr, error, ex) {
+                            $("#text_ti").html("出现错误!")
+                            x()
+                        }
+                    })
+                }
+            }
+        }
+    })
+
+    //详情
+    $(".ok").click(function () {
+        //显示
+        $("#xiang").show();
+
+        //编号
+        var item = this;
+        var p = item.parentElement.parentElement.firstElementChild;
+        $("#h1").html("编号:" + p.innerHTML.substring(3));
+        //内容
+
+        $.ajax({
+            url: "/User/xiangqing",
+            type: "get",
+            async: false,
+            data: { "id": p.innerHTML.substring(3) },
+            success: function (data) {
+                var value = data.split("&");
+                $("#name").html(value[0])
+                $("#time").html(value[1])
+                $("#zhuti").html(value[2])
+                $("#xiangxi").html(value[3])
+                $("#huifu").html(value[4])
+                if (value[4]=="") {
+                    $("#huifu").val("管理员收到了您的反馈,我们正在全力解决")
+                }
+                if (value[5]=="0") {
+                    $("#huifu").val("管理员还未回复")
+                }
+                
+            },
+            error: function () {
+                alert("出错啦...")
+            }
+        })
+    })
+
+    $("#back").click(function () {
+        //隐藏
+        $("#xiang").hide();
+    })
+
+</script>

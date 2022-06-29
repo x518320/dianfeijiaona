@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "用户验证";
+    Layout = "~/Views/Shared/boss.cshtml";
+}
+@model IEnumerable<卓越项目.Models.zhuce>
+<style>
+    .sp {
+        flex: 1;
+        text-align: center
+    }
+
+    .no {
+        background-color: #db4141;
+        color: white;
+    }
+</style>
+<link href="~/Content/animate.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<div class="container-fluid  animate__animated  animate__fadeInDown">
+    <div class="container-fluid cm-container-white" style="background-color: white; margin: auto auto auto -1.2%; width: 102.5%;">
+        <h1 style="font-weight:900;text-align:center;color:#0f8ab4">用户验证</h1>
+
+        @foreach (var item in Model)
+        {
+            <div style="background-color:#0f8ab4;width:100%;height:100px;margin:20px 0px;border-radius:100px;display:flex;font-size:20px;color:white;line-height:100px">
+                <span class="sp">编号:@item.id</span>
+                <span class="sp">姓名:@item.name</span>
+                <span class="sp">电话:@item.phone</span>
+                <span class="sp">提交时间:@item.time.ToString().Substring(0, 8)</span>
+
+                <span class="sp">
+                    @Html.ActionLink("拒绝", "yanzheng_no", new { id = item.id }, new { @class = "btn no" })
+                    <a class="btn btn-info ok">同意</a>
+                </span>
+            </div>
+        }
+        @if (Model.Count() == 0)
+        {
+            <p style="text-align:center;font-weight:900;letter-spacing:5px;font-size:24px;margin:200px 0px">暂无用户验证记录</p>
+        }
+
+
+    </div>
+</div>
+<div id="xiang" style="position: fixed;
+        background-color: #80808055;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        z-index: 10;
+        display: none;">
+    <div class="animate__animated  animate__fadeInRight" style="width: 800px;
+        height: 300px;
+        background-color: aliceblue;
+        margin-left: 25%;
+        margin-top: 225px;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(20, 20, 20, 0.8);
+        backdrop-filter: blur(50px);
+">
+
+        <img id="back" style="float:right;width:50px;height:50px;" src="~/Content/demo/assets/img/sf/sign-error.svg" />
+        <h1 id="h1" style="font-weight:900;text-align:center;padding:15px;"> 编号:1</h1>
+        <p style="font-size:25px;text-align:center;padding:50px 0px">
+            房间:<select id="xl" style="margin:0px;padding:0px">
+            </select>
+        </p>
+        <button id="ok" class="btn btn-block btn-info" style="width:60%;margin-left:20%;padding:20px 0px;font-size:30px">确定</button>
+    </div>
+</div>
+<script>
+
+
+    $(".ok").click(function () {
+        //显示
+        $("#xiang").show();
+
+        //编号
+        var item = this;
+        var p = item.parentElement.parentElement.firstElementChild;
+        $("#h1").html("编号:" + p.innerHTML.substring(3));
+
+        //下拉框赋值
+
+        $.ajax({
+            url: "/Boss/xiala",
+            type: "get",
+            async: false,
+            success: function (data) {
+                data.forEach((item) => {
+                    $("#xl").append("<option value='" + item.id + "' >" + item.dong + " " + item.danyuan + "单元 " + item.louceng + "楼层 " + item.fangjian + "号" + "</option>");
+                })
+            },
+            error: function () {
+                alert("出错啦...")
+            }
+        })
+
+    })
+
+    $("#back").click(function () {
+        //隐藏
+        $("#xiang").hide();
+    })
+
+    $("#ok").click(function () {
+        var fid = $("#xl").children('option:selected').val();
+        var zid = $("#h1").html().substring(3);
+
+        $.ajax({
+            url: "/Boss/yanzhenginto",
+            type: "get",
+            async: false,
+            data: { fid, zid },
+            success: function (date) {
+                if (date == "1") {
+                    alert("添加成功!")
+                    location.href = "/Boss/yanzheng"
+                }
+            },
+            error: function () {
+                alert("出错啦...")
+            }
+        })
+
+    })
+</script>

@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "修改密码";
+    Layout = "~/Views/Shared/home.cshtml";
+}
+
+<style>
+    .p1 {
+        margin: 40px 0px;
+        font-size: 24px;
+    }
+
+    .btn {
+        width: 25%;
+        padding: 10px 0px;
+    }
+    .tishi, .tishi2 {
+        display: none;
+        position: absolute;
+        width: 400px;
+        color: white;
+        text-align: center;
+        padding: 0px 10px;
+        line-height: 50px;
+        height: 50px;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        margin: auto;
+        font-size:25px;
+        z-index: 10;
+        border-radius: 50px;
+        background-color: #fc5c65;
+        box-shadow: 0 5px 15px rgba(20, 20, 20, 0.8);
+        backdrop-filter: blur(50px);
+    }
+</style>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+@*错误提示*@
+<div class="tishi">
+    <img style="width:50px;height:50px" src="~/Images/苦脸.svg" />
+    <span id="text_ti">账号或密码错误,请检查!</span>
+</div>
+@*成功提示*@
+<div class="tishi2" style="background-color:aquamarine">
+    <img style="width:50px;height:50px" src="~/Images/笑脸.svg" />
+    <span id="text_ti2">登录成功!</span>
+</div>
+<div class="container-fluid">
+    <div class="container-fluid cm-container-white" style="background-color: white; margin: auto auto auto -1.2%; width: 102.5%;">
+        <h1 style="font-weight:900;text-align:center;color:#0f8ab4">修改密码</h1>
+        <div style="display:flex;justify-content:center;margin-top:4%">
+            <form id="biao" action="~/User/edit" method="post">
+                <p class="p1">旧&nbsp;密&nbsp;码&nbsp;: <input id="t1" type="text" placeholder="请输入旧密码" /><br /></p>
+                <p class="p1">新&nbsp;密&nbsp;码&nbsp;: <input id="t2" type="password" placeholder="请输入新密码" /><br /></p>
+                <p class="p1">确认密码:<input id="t3" type="password" placeholder="请输入确认密码" />   <br /></p>
+                <p class="p1" style="text-align:center ;margin-top:50px">
+                    <input  id="ok" class="btn btn-info" disabled="disabled" type="submit" value="提交" />
+                    <input id="back" class="btn btn-info" type="button" value="取消" />
+                </p>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $("#ok").attr("disabled", true);
+    //错误提示
+    function x() {
+        $('.tishi').fadeIn(700, function () {
+            setTimeout(function () {
+                $('.tishi').fadeOut(700);
+            }, 700)
+        });
+    }
+    function x2() {
+        $('.tishi2').fadeIn(700, function () {
+            setTimeout(function () {
+                $('.tishi2').fadeOut(700);
+            }, 700)
+        });
+    }
+    //非空
+    $("#t1,#t2,#t3").blur(function () {
+        if ($("#t1").val().trim() == "" || $("#t2").val().trim() == "" || $("#t3").val().trim() == "") {
+            $("#ok").attr("disabled", true);
+        } else {
+            $("#ok").attr("disabled", false);
+        }
+    })
+    //非法输入
+    $("#biao").submit(function () {
+        if ($("#t2").val().length < 6 || $("#t3").val().length < 6) {
+            $("#text_ti").html("密码长度大于等于6!")
+            x()
+        } else if ($("#t2").val() != $("#t3").val()) {
+            $("#text_ti").html("两次密码不一致!")
+            x()
+        } else if ($("#t2").val().indexOf('<') != -1) {
+            $("#text_ti").html("包含非法字符< / *!")
+            x()
+        } else {
+            jQuery.ajax({
+                url: "/User/editcheck",
+                type: "POST",
+                data: { "pwd1": $("#t1").val(), "pwd2": $("#t2").val() },
+                success: function (date) {
+                    if (date == "1") {
+                        $("#text_ti").html("原密码错误!")
+                        x()
+                    } else {
+                        if (date == "2") {
+                            $("#text_ti2").html("修改成功!")
+                            x2()
+                        }
+                    }
+                },
+                error: function (xhr, error, ex) {
+                    $("#text_ti").html("出现错误!")
+                    x()
+                }
+            })
+        }
+        return false;
+    })
+
+    //取消
+    $("#back").click(function () {
+        $("#t1").val("");
+        $("#t2").val("");
+        $("#t3").val("");
+    })
+</script>

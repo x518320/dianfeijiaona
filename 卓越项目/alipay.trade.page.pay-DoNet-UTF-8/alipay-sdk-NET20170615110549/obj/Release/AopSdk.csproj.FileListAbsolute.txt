@@ -1,0 +1,6 @@
+C:\Users\41155\Documents\Tencent Files\411550694\FileRecv\alipay.trade.page.pay-DoNet-UTF-8\alipay-sdk-NET20170615110549\bin\Release\AopSdk.dll
+C:\Users\41155\Documents\Tencent Files\411550694\FileRecv\alipay.trade.page.pay-DoNet-UTF-8\alipay-sdk-NET20170615110549\bin\Release\AopSdk.pdb
+C:\Users\41155\Documents\Tencent Files\411550694\FileRecv\alipay.trade.page.pay-DoNet-UTF-8\alipay-sdk-NET20170615110549\obj\Release\AopSdk.csprojAssemblyReference.cache
+C:\Users\41155\Documents\Tencent Files\411550694\FileRecv\alipay.trade.page.pay-DoNet-UTF-8\alipay-sdk-NET20170615110549\obj\Release\AopSdk.csproj.CoreCompileInputs.cache
+C:\Users\41155\Documents\Tencent Files\411550694\FileRecv\alipay.trade.page.pay-DoNet-UTF-8\alipay-sdk-NET20170615110549\obj\Release\AopSdk.dll
+C:\Users\41155\Documents\Tencent Files\411550694\FileRecv\alipay.trade.page.pay-DoNet-UTF-8\alipay-sdk-NET20170615110549\obj\Release\AopSdk.pdb

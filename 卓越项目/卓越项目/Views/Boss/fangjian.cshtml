@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "房间管理";
+    Layout = "~/Views/Shared/boss.cshtml";
+}
+@model IEnumerable<卓越项目.Models.fang>
+
+<style>
+    th {
+        text-align: center;
+    }
+</style>
+<div class="container-fluid">
+    <div class="container-fluid cm-container-white" style="background-color: white; margin: auto auto auto -1.2%; width: 102.5%;">
+        <h1 style="font-weight:900;text-align:center;color:#0f8ab4">房间管理</h1>
+        <table class="table text-center">
+            <tr>
+                <th>
+                    编号
+                </th>
+                <th>
+                    房区
+                </th>
+                <th>
+                    单元
+                </th>
+                <th>
+                    楼层
+                </th>
+                <th>
+                    房号
+                </th>
+                <th>
+                    用户名
+                </th>
+                <th>
+                    用户余额
+                </th>
+                <th>
+                    操作
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @item.id
+            </td>
+            <td>
+                @item.dong
+            </td>
+            <td>
+                @item.danyuan
+            </td>
+            <td>
+                @item.louceng
+            </td>
+            <td>
+                @item.fangjian
+            </td>
+            <td>
+                <img style="width:40px ;height:40px;margin-left:-5px;border-radius:50%" src="@item.User.url" />
+
+                @item.User.name
+            </td>
+            <td>
+             &yen; @item.User.money
+            </td>
+            <td>
+                <a href="~/Boss/fangjian_info?id=@item.id" >更多操作</a>
+            </td>
+        </tr>
+            }
+        </table>
+</div>
+</div>
